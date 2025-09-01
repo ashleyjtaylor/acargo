@@ -1,0 +1,50 @@
+name: ci
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  lint:
+    name: Lint
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          fetch-depth: 0
+      - uses: ./.github/actions/restore-turbo-cache
+      - uses: ./.github/actions/pnpm-setup-install
+        with:
+          node-version: '24'
+          pnpm-version: '10'
+
+      - name: base sha
+        id: base
+        uses: ./.github/actions/base-sha
+
+      - run: pnpm turbo run lint --cache-dir=.turbo --filter=...[${{ steps.base.outputs.sha }}]
+
+  typecheck:
+    name: Typecheck
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          fetch-depth: 0
+      - uses: ./.github/actions/restore-turbo-cache
+      - uses: ./.github/actions/pnpm-setup-install
+        with:
+          node-version: '24'
+          pnpm-version: '10'
+
+      - name: base sha
+        id: base
+        uses: ./.github/actions/base-sha
+
+      - run: pnpm turbo run typecheck --cache-dir=.turbo --filter=...[${{ steps.base.outputs.sha }}]

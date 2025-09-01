@@ -1,0 +1,47 @@
+name: setup pnpm
+description: setup node.js environment
+
+inputs:
+  node-version:
+    description: Node.js version
+    required: false
+    default: '24'
+  pnpm-version:
+    description: pnpm version
+    required: false
+    default: '10'
+  
+outputs:
+  pnpm_store_path:
+    description: pnpm store path
+    value: ${{ steps.pnpm-store.outputs.STORE_PATH }}
+
+runs:
+  using: composite
+  steps:
+    - uses: actions/setup-node@v4
+      with:
+        node-version: ${{ inputs.node_version }}
+
+    - name: pnpm setup
+      uses: pnpm/action-setup@v4
+      with:
+        version: ${{ inputs.pnpm-version }}
+        run_install: false
+    
+    - name: pnpm store path
+      id: pnpm-store
+      shell: bash
+      run: echo "STORE_PATH=$(pnpm store path)" >> "$GITHUB_OUTPUT"
+
+    - name: pnpm store cache
+      uses: actions/cache@v4
+      with:
+        path: ${{ steps.pnpm-store.outputs.STORE_PATH }}
+        key: pnpm-store-${{ runner.os }}-${{ hashFiles('**/pnpm-lock.yaml') }}
+        restore-keys: |
+          pnpm-store-${{ runner.os }}-
+
+    - name: install
+      shell: bash
+      run: pnpm i --frozen-lockfile

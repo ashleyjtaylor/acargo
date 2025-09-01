@@ -1,0 +1,9 @@
+{
+  "editor.formatOnSave": true,
+  "editor.defaultFormatter": "biomejs.biome",
+  "editor.codeActionsOnSave": { "source.fixAll.eslint": "always" },
+  "biome.configurationPath": "./biome.json",
+  "eslint.validate": ["javascript", "typescript", "typescriptreact"],
+  "eslint.format.enable": false,
+  "[json]": { "editor.defaultFormatter": "biomejs.biome" }
+}

@@ -1,0 +1,15 @@
+name: restore turbo cache
+description: Restore Turborepo cache directories
+
+runs:
+  using: composite
+  steps:
+    - name: turborepo cache
+      uses: actions/cache@v4
+      with:
+        path: |
+          .turbo
+          node_modules/.cache
+        key: ${{ inputs.key-prefix }}-${{ runner.os }}-${{ hashFiles('**/pnpm-lock.yaml', '**/turbo.json') }}
+        restore-keys: |
+          ${{ inputs.key-prefix }}-${{ runner.os }}-

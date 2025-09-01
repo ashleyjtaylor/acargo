@@ -1,0 +1,19 @@
+name: base sha
+description: Get the current commit sha
+
+outputs:
+  sha:
+    description: Commit SHA
+    value: ${{ steps.compute.outputs.BASE }}
+
+runs:
+  using: composite
+  steps:
+    - id: compute
+      shell: bash
+      run: |
+        if [[ "${{ github.event_name }}" == "pull_request" ]]; then
+          echo "BASE=${{ github.event.pull_request.base.sha }}" >> "$GITHUB_OUTPUT"
+        else
+          echo "BASE=$(git rev-parse HEAD~1)" >> "$GITHUB_OUTPUT"
+        fi
