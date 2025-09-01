@@ -22,7 +22,7 @@ jobs:
       - uses: ./.github/actions/setup-pnpm
         with:
           node-version: '24'
-          pnpm-version: '10'
+          pnpm-version: '10.15.1'
 
       - name: base sha
         id: base
@@ -41,7 +41,7 @@ jobs:
       - uses: ./.github/actions/setup-pnpm
         with:
           node-version: '24'
-          pnpm-version: '10'
+          pnpm-version: '10.15.1'
 
       - name: base sha
         id: base
