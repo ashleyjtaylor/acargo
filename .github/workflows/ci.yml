@@ -76,6 +76,8 @@ jobs:
         app: [web, api]
     steps:
       - uses: actions/checkout@v5
+        with:
+          fetch-depth: 0
       - uses: ./.github/actions/restore-turbo-cache
       - uses: ./.github/actions/setup-pnpm
         with:
@@ -86,7 +88,7 @@ jobs:
           pnpm turbo run build --filter=./apps/${{ matrix.app }}
           pnpm turbo run test --filter=./apps/${{ matrix.app }} -- --coverage
       - name: Sonar scan (${{ matrix.app }})
-        uses: SonarSource/sonarcloud-github-action@v5
+        uses: SonarSource/sonarqube-scan-action@@v5
         with:
           projectBaseDir: apps/${{ matrix.app }}
         env:
