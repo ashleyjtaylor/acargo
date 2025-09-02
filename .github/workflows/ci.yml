@@ -12,7 +12,7 @@ concurrency:
 
 jobs:
   lint:
-    name: Lint
+    name: lint
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v5
@@ -31,7 +31,7 @@ jobs:
       - run: pnpm turbo run lint --cache-dir=.turbo --filter=...[${{ steps.base.outputs.sha }}]
 
   typecheck:
-    name: Typecheck
+    name: typecheck
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v5
@@ -48,3 +48,22 @@ jobs:
         uses: ./.github/actions/base-sha
 
       - run: pnpm turbo run typecheck --cache-dir=.turbo --filter=...[${{ steps.base.outputs.sha }}]
+  
+  test:
+    name: unit test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          fetch-depth: 0
+      - uses: ./.github/actions/restore-turbo-cache
+      - uses: ./.github/actions/setup-pnpm
+        with:
+          node-version: '24'
+          pnpm-version: '10.15.1'
+
+      - name: base sha
+        id: base
+        uses: ./.github/actions/base-sha
+
+      - run: pnpm turbo run test --cache-dir=.turbo --filter=...[${{ steps.base.outputs.sha }}]
