@@ -9,7 +9,7 @@ export default defineConfig(() => ({
     include: ['__tests__/**/*.test.{ts,tsx}'],
     coverage: {
       include: ['src/**/*.{ts,tsx}'],
-      reporter: ['text', 'json', 'html']
+      reporter: ['text', 'json', 'html', 'lcov']
     }
   }
 }))
