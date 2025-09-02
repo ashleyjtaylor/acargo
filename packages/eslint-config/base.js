@@ -67,7 +67,11 @@ export const eslintBaseConfig = [
       '**/.turbo/**',
       '**/generated/**',
       '**/node_modules/**',
-      '**/.tsbuildinfo'
+      '**/.tsbuildinfo',
+      '**/.next/**',
+      '**/out/**',
+      '**/build/**',
+      '**/next-env.d.ts'
     ]
   },
   {

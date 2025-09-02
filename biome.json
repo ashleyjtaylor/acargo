@@ -7,13 +7,23 @@
   },
   "files": {
     "ignoreUnknown": false,
-    "includes": ["**", "**/packages/**/*"]
+    "includes": [
+      "**",
+      "**/packages/**/*",
+      "!**/node_modules",
+      "!**/dist",
+      "!**/build",
+      "!**/.next",
+      "!**/.turbo",
+      "!**/.biome",
+      "!**/.git"
+    ]
   },
   "formatter": {
     "enabled": true,
     "indentStyle": "space",
     "indentWidth": 2,
-    "lineWidth": 110,
+    "lineWidth": 90,
     "lineEnding": "lf",
     "expand": "auto"
   },
