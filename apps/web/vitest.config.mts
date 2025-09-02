@@ -6,7 +6,7 @@ export default defineConfig(() => ({
   plugins: [tsconfigPaths(), react()],
   test: {
     environment: 'jsdom',
-    include: ['__tests__/**/*.test.{ts,tsx}'],
+    include: ['test_/**/*.test.{ts,tsx}'],
     coverage: {
       include: ['src/**/*.{ts,tsx}'],
       reporter: ['text', 'json', 'html', 'lcov']

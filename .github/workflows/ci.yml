@@ -67,3 +67,24 @@ jobs:
         uses: ./.github/actions/base-sha
 
       - run: pnpm turbo run test --cache-dir=.turbo --filter=...[${{ steps.base.outputs.sha }}]
+
+  sonar:
+    name: sonar
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        app: [web, api]
+    steps:
+      - uses: actions/checkout@v5
+      - uses: ./.github/actions/restore-turbo-cache
+      - uses: ./.github/actions/pnpm-setup-install
+      - name: build & test - (${{ matrix.app }})
+        run: |
+          pnpm turbo run build --filter=./apps/${{ matrix.app }}
+          pnpm turbo run test --filter=./apps/${{ matrix.app }} -- --coverage
+      - name: Sonar scan (${{ matrix.app }})
+        uses: SonarSource/sonarcloud-github-action@v5
+        with:
+          projectBaseDir: apps/${{ matrix.app }}
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
