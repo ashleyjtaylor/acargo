@@ -12,20 +12,20 @@
   "license": "ISC",
   "packageManager": "pnpm@10.15.1",
   "dependencies": {
-    "express": "^5.1.0"
+    "express": "catalog:"
   },
   "devDependencies": {
     "@acargo/eslint-config": "workspace:*",
     "@acargo/ts-config": "workspace:*",
-    "@types/express": "^5.0.3",
-    "@types/node": "^20.19.11",
-    "@types/supertest": "^6.0.3",
-    "@vitest/coverage-v8": "3.2.4",
-    "eslint": "9.34.0",
-    "supertest": "^7.1.4",
-    "tsx": "^4.20.5",
-    "typescript": "^5.9.2",
-    "vite-tsconfig-paths": "^5.1.4",
-    "vitest": "^3.2.4"
+    "@types/express": "catalog:",
+    "@types/node": "catalog:",
+    "@types/supertest": "catalog:",
+    "@vitest/coverage-v8": "catalog:",
+    "eslint": "catalog:",
+    "supertest": "catalog:",
+    "tsx": "catalog:",
+    "typescript": "catalog:",
+    "vite-tsconfig-paths": "catalog:",
+    "vitest": "catalog:"
   }
 }
