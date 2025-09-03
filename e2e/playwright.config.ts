@@ -69,18 +69,20 @@ export default defineConfig({
   /* Run your local dev server before starting the tests */
   webServer: [
     {
-      command: 'pnpm --filter @acargo/web dev --port 3232',
       name: 'Web',
+      env: { PORT: '3232', HOST: '127.0.0.1' },
       url: 'http://127.0.0.1:3232',
       timeout: 120 * 1000,
-      reuseExistingServer: !process.env.CI
+      reuseExistingServer: !process.env.CI,
+      command: 'pnpm --filter @acargo/web dev'
     },
     {
-      command: 'PORT=4242 pnpm --filter @acargo/api dev',
       url: 'http://127.0.0.1:4242',
       name: 'API',
+      env: { PORT: '4242', HOST: '127.0.0.1' },
       timeout: 120 * 1000,
-      reuseExistingServer: !process.env.CI
+      reuseExistingServer: !process.env.CI,
+      command: 'pnpm --filter @acargo/api dev'
     }
   ]
 })
