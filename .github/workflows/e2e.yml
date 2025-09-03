@@ -1,7 +1,6 @@
 name: e2e
 
 on:
-  pull_request:
   push:
     branches: [main]
 
@@ -11,8 +10,11 @@ concurrency:
 
 jobs:
   e2e:
+    timeout-minutes: 10
     runs-on: ubuntu-latest
-    timeout-minutes: 60
+    strategy:
+      matrix:
+        shard: [1, 2, 3]
     env:
       CI: true
 
@@ -31,7 +33,7 @@ jobs:
         run: pnpm --filter @acargo/e2e exec playwright install --with-deps
 
       - name: run tests
-        run: pnpm --filter @acargo/e2e e2e --reporter=dot
+        run: pnpm --filter @acargo/e2e e2e --reporter=dot --shard=${{ matrix.shard }}/3
         env:
           DEBUG: pw:webserver
   
