@@ -13,6 +13,14 @@ node_modules
 # Testing
 coverage
 
+# Playwright
+node_modules/
+test-results/
+playwright-report/
+blob-report/
+playwright/.cache/
+
+
 # Turbo
 .turbo
 
@@ -29,3 +37,9 @@ npm-debug.log*
 # Misc
 .DS_Store
 *.pem
+
+# Playwright
+/test-results/
+/playwright-report/
+/blob-report/
+/playwright/.cache/

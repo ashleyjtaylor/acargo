@@ -1,13 +1,16 @@
 {
   "extends": "@acargo/ts-config/base.json",
-  "include": ["src", "test"],
+  "include": ["src"],
+  "exclude": ["test"],
   "compilerOptions": {
     "target": "esnext",
     "module": "esnext",
     "moduleResolution": "node",
-    "noEmit": true,
     "types": ["node"],
+    "rootDir": "src",
+    "outDir": "dist",
     "baseUrl": ".",
+    "noEmit": false,
     "paths": {
       "@/*": ["src/*"]
     }

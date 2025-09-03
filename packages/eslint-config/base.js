@@ -66,6 +66,8 @@ export const eslintBaseConfig = [
       '**/build/**',
       '**/.turbo/**',
       '**/generated/**',
+      '**/playwright-report/**',
+      '**/test-results/**',
       '**/node_modules/**',
       '**/.tsbuildinfo',
       '**/.next/**',
