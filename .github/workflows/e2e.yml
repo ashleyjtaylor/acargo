@@ -31,7 +31,7 @@ jobs:
         run: pnpm --filter @acargo/e2e exec playwright install --with-deps
 
       - name: run tests
-        run: pnpm --filter @acargo/e2e e2e -- --reporter=dot
+        run: pnpm --filter @acargo/e2e e2e --reporter=dot
         env:
           DEBUG: pw:webserver
   
