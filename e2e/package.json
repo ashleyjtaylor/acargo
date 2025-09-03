@@ -11,9 +11,9 @@
     "@acargo/eslint-config": "workspace:*",
     "@acargo/ts-config": "workspace:*",
     "@playwright/test": "^1.55.0",
-    "@types/node": "^24.3.0",
-    "eslint": "^9.34.0",
-    "typescript": "^5.9.2"
+    "@types/node": "catalog:",
+    "eslint": "catalog:",
+    "typescript": "catalog:"
   },
   "license": "ISC",
   "packageManager": "pnpm@10.15.1"
