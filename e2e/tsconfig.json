@@ -1,0 +1,7 @@
+{
+  "extends": "@acargo/ts-config/base.json",
+  "include": ["playwright.config.ts", "test"],
+  "compilerOptions": {
+    "types": ["node"]
+  }
+}
