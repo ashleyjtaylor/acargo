@@ -36,7 +36,7 @@ jobs:
     steps:
       - uses: actions/checkout@v5
       - uses: ./.github/actions/pnpm
-      - run: pnpm turbo run typecheck --cache-dir=.turbo --filter=apps/api...
+      - run: pnpm turbo run typecheck --cache-dir=.turbo --filter=./apps/api...
 
   build:
     name: build
@@ -44,7 +44,7 @@ jobs:
     steps:
       - uses: actions/checkout@v5
       - uses: ./.github/actions/pnpm
-      - run: pnpm turbo run build --cache-dir=.turbo --filter=apps/api...
+      - run: pnpm turbo run build --cache-dir=.turbo --filter=./apps/api...
 
   test:
     name: unit test
@@ -52,7 +52,7 @@ jobs:
     steps:
       - uses: actions/checkout@v5
       - uses: ./.github/actions/pnpm
-      - run: pnpm turbo run test --cache-dir=.turbo --filter=apps/api... -- --coverage
+      - run: pnpm turbo run test --cache-dir=.turbo --filter=./apps/api... -- --coverage
       - name: Upload API coverage
         uses: actions/upload-artifact@v4
         with:
