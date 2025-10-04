@@ -1,0 +1,85 @@
+name: ci-api
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "apps/api/**"
+      - "packages/**"
+      - ".github/workflows/ci-api.yml"
+  pull_request:
+    paths:
+      - "apps/api/**"
+      - "packages/**"
+      - ".github/workflows/ci-api.yml"
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  TURBO_TEAM: ${{ secrets.TURBO_TEAM }}
+  TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
+
+jobs:
+  lint:
+    name: lint
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - uses: ./.github/actions/pnpm
+      - run: pnpm lint
+
+  typecheck:
+    name: typecheck
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - uses: ./.github/actions/pnpm
+      - run: pnpm turbo run typecheck --cache-dir=.turbo --filter=apps/api...
+
+  build:
+    name: build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - uses: ./.github/actions/pnpm
+      - run: pnpm turbo run build --cache-dir=.turbo --filter=apps/api...
+
+  test:
+    name: unit test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - uses: ./.github/actions/pnpm
+      - run: pnpm turbo run test --cache-dir=.turbo --filter=apps/api... -- --coverage
+      - name: Upload API coverage
+        uses: actions/upload-artifact@v4
+        with:
+          name: api-coverage
+          path: apps/api/coverage/**
+          if-no-files-found: warn
+          retention-days: 1
+
+  sonar:
+    name: sonar
+    runs-on: ubuntu-latest
+    needs: [test]
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          fetch-depth: 0
+      - uses: ./.github/actions/pnpm
+
+      - name: Download API coverage
+        uses: actions/download-artifact@v5
+        with:
+          name: api-coverage
+          path: apps/api/coverage
+
+      - name: Sonar scan
+        uses: sonarsource/sonarqube-scan-action@v6
+        with:
+          projectBaseDir: apps/api
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}

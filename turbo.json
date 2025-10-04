@@ -2,7 +2,18 @@
   "$schema": "https://turborepo.com/schema.json",
   "tasks": {
     "build": {
-      "outputs": ["dist/**"]
+      "outputs": [
+        "dist/**"
+      ]
+    },
+    "test": {
+      "interactive": true,
+      "dependsOn": [
+        "^build"
+      ],
+      "outputs": [
+        "coverage/**"
+      ]
     },
     "typecheck": {
       "dependsOn": [],

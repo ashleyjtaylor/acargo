@@ -2,6 +2,8 @@
   "name": "@acargo/root",
   "version": "1.0.0",
   "scripts": {
+    "build": "turbo run build",
+    "test": "turbo run test",
     "typecheck": "turbo run typecheck",
     "clean": "turbo run clean",
     "lint": "biome check .",
