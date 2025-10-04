@@ -6,10 +6,6 @@ inputs:
     description: Node.js version
     required: false
     default: '22'
-  pnpm-version:
-    description: pnpm version
-    required: false
-    default: '10'
 
 outputs:
   pnpm_store_path:
@@ -19,17 +15,16 @@ outputs:
 runs:
   using: composite
   steps:
+    - name: pnpm setup
+      uses: pnpm/action-setup@v4
+      with:
+        run_install: false
+  
     - id: setup-node
       uses: actions/setup-node@v5
       with:
         node-version: ${{ inputs.node-version }}
         cache: 'pnpm'
-
-    - name: pnpm setup
-      uses: pnpm/action-setup@v4
-      with:
-        version: ${{ inputs.pnpm-version }}
-        run_install: false
 
     - name: pnpm store path
       id: pnpm-store
