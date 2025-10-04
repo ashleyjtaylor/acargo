@@ -6,6 +6,10 @@ inputs:
     description: Node.js version
     required: false
     default: '22'
+  pnpm-version:
+    description: pnpm version
+    required: false
+    default: '10'
 
 outputs:
   pnpm_store_path:
@@ -19,6 +23,20 @@ runs:
       uses: pnpm/action-setup@v4
       with:
         run_install: false
+      
+    - name: Enable Corepack
+      shell: bash
+      run: corepack enable
+
+    - name: Activate pnpm ${{ inputs.pnpm-version }}
+      shell: bash
+      run: corepack prepare pnpm@${{ inputs.pnpm-version }} --activate
+
+    - name: Check pnpm
+      shell: bash
+      run: |
+        which pnpm || true
+        pnpm -v
   
     - id: setup-node
       uses: actions/setup-node@v5
